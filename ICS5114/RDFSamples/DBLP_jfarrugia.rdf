@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE rdf:RDF [
+ <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+ <!ENTITY bibliography "http://dblp.org/bibliography#">
+ <!ENTITY citation "http://dblp.org/citations#">
+ <!ENTITY conference "http://dblp.org/conferences#">
+ <!ENTITY proceeding "http://dblp.org/proceedings#"> 
+ <!ENTITY author "http://dblp.org/authors#"> 
+]>
+
+<rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:citation="&citation;"
+xmlns:conference="&conference;"
+xmlns:proceeding="&proceeding;"
+xmlns:author="&author;"
+xmlns:dblp="&bibliography;"
+xml:base = "http://dblp.org/"
+>
+
+<rdf:Description rdf:about="conf/chiir">
+  <rdf:type rdf:resource="&conference;conference"/>  
+</rdf:Description>
+
+<rdf:Description rdf:about="conf/chiir/2016">
+  <rdf:type rdf:resource="&proceeding;proceedings"/>
+  <proceeding:editionOf rdf:resource="/conf/chiir"/>
+  <proceeding:year>2016</proceeding:year>
+  <proceeding:bookTitle>CHIIR</proceeding:bookTitle>  
+</rdf:Description>
+
+<rdf:Description rdf:ID="cabela">
+   <rdf:type rdf:resource="&author;author"/>
+   <author:name>Charlie Abela</author:name>
+</rdf:Description>
+
+<rdf:Description rdf:ID="cstaff">
+   <rdf:type rdf:resource="&author;author"/>
+   <author:name>Christopher Staff</author:name>
+</rdf:Description>
+
+
+<rdf:Description rdf:about="conf/chiir/AbelaS16">
+  <rdf:type rdf:resource="&citation;citation"/>
+  <citation:mDate>2016-04-12</citation:mDate>
+  <citation:title>Behaviour Mining for Automatic Task-Keeping and Visualisations for Task-Refinding</citation:title>
+  <citation:pages>23-32</citation:pages>
+  <citation:ee>http://dl.acm.org/citation.cfm?doid=2854946.2854966</citation:ee>
+  <citation:url>db/conf/chiir/chiir2016.html#AbelaS16</citation:url>
+  <citation:crossref rdf:resource="conf/chiir/2016"/>
+  <citation:author>
+     <rdf:Bag>
+  	<rdf:li rdf:resource="#cabela"/>
+  	<rdf:li rdf:resource="#cstaff"/>
+     </rdf:Bag>
+  </citation:author>
+</rdf:Description>
+
+<rdf:Description rdf:ID="dblp001">
+   <rdf:type rdf:resource="&bibliography;bibliography"/>
+   <dblp:citation rdf:resource="conf/chiir/AbelaS16" />
+</rdf:Description>
+
+</rdf:RDF>

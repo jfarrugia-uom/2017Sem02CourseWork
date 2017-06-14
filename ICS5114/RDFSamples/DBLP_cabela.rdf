@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE rdf:RDF [
+ <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+ <!ENTITY dblp "http://dblp.org/publications#">  
+]>
+
+<rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dblp="&dblp;"
+xml:base = "http://publications.org/publications"
+>
+
+<rdf:Description rdf:ID="chiir">
+  <rdf:type rdf:resource="&dblp;conference"/>  
+</rdf:Description>
+
+<rdf:Description rdf:ID="chiir2016">
+  <rdf:type rdf:resource="&dblp;proceedings"/>
+  <dblp:editionOf rdf:resource="#chiir"/>
+  <dblp:year>2016</dblp:year>
+  <dblp:bookTitle>CHIIR</dblp:bookTitle>  
+</rdf:Description>
+
+<rdf:Description rdf:ID="cabela">
+   <rdf:type rdf:resource="&dblp;author"/>
+   <dblp:name>Charlie Abela</dblp:name>
+</rdf:Description>
+
+<rdf:Description rdf:ID="cstaff">
+   <rdf:type rdf:resource="&dblp;author"/>
+   <dblp:name>Christopher Staff</dblp:name>
+</rdf:Description>
+
+
+<rdf:Description rdf:ID="chiirAbelaS16">
+  <rdf:type rdf:resource="&dblp;citation"/>
+  <dblp:mDate>2016-04-12</dblp:mDate>
+  <dblp:title>Behaviour Mining for Automatic Task-Keeping and Visualisations for Task-Refinding</dblp:title>
+  <dblp:pages>23-32</dblp:pages>
+  <dblp:ee>http://dl.acm.org/citation.cfm?doid=2854946.2854966</dblp:ee>
+  <dblp:url>db/conf/chiir/chiir2016.html#AbelaS16</dblp:url>
+  <dblp:crossref rdf:resource="#chiir2016"/>
+  <dblp:author rdf:resource="#cabela"/>
+  <dblp:author rdf:resource="#cstaff"/>
+</rdf:Description>
+
+<rdf:Description rdf:ID="dblp001">
+   <rdf:type rdf:resource="&dblp;bibliography"/>
+   <dblp:citation rdf:resource="#chiirAbelaS16" />
+</rdf:Description>
+
+</rdf:RDF>

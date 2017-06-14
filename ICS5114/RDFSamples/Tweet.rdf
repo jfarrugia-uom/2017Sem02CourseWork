@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"	
+	xmlns:myDomain="http://example2.org/"
+	xml:base="http://example2.org/">
+	
+	<rdf:Description rdf:about="RoderickMallia">
+	  <myDomain:alias>@NouveauDanDay</myDomain:alias>
+	  <myDomain:tweeted rdf:parseType="Resource">
+	     <myDomain:timestamp>20-04-13T07:42</myDomain:timestamp>
+	     <myDomain:tweet>Hunters are already...</myDomain:tweet>
+	  </myDomain:tweeted>
+	</rdf:Description>
+
+</rdf:RDF>
+
+
+
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"	
+	xmlns:myDomain="http://example2.org/"
+	xml:base="http://example2.org/">
+	
+	<myDomain:twitterUser rdf:about="RoderickMallia">
+	  <myDomain:alias>@NouveauDanDay</myDomain:alias>
+	  <myDomain:tweeted rdf:parseType="Resource">
+	     <myDomain:timestamp>20-04-13T07:42</myDomain:timestamp>
+	     <myDomain:tweet>Hunters are already...</myDomain:tweet>
+	  </myDomain:tweeted>
+	</myDomain:twitterer>
+
+</rdf:RDF>
+
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"	
+	xmlns:myDomain="http://www.w3.org/2000/10/swap/pim/contact#"
+	xml:base="http://www.w3.org/2000/10/swap/pim/contact"
+	>
+		
+	<myDomain:Person rdf:ID="me">
+	   <myDomain:fullName>Eric Miller</myDomain:fullName>
+	   <myDomain:personalTitle>Dr</myDomain:personalTitle>
+	   <myDomain:mailbox rdf:resource="mailto:em@w3.org"/>
+	</myDomain:Person>
+</rdf:RDF>
+
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"	
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:terms="http://www.example.org/terms/"
+	xml:base="http://www.example.org">
+	
+	<rdf:Description rdf:about="index.html">
+	  <dc:creator rdf:resource="staffid/85740"/>
+	  <dc:language>en</dc:language>
+	</rdf:Description>
+	
+	<rdf:Description rdf:about="staffid/85740">
+	  <terms:name>John Smith</terms:name>
+	</rdf:Description>
+</rdf:RDF>

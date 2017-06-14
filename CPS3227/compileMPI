@@ -1,0 +1,1 @@
+mpicc -fopenmp mpi_prod_cons.c -o mpi_prod_cons.o

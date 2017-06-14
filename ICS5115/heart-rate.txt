@@ -1,0 +1,44 @@
+rate group
+ 73 sit
+ 91 jump
+114 jump
+ 72 sit
+100 jump
+ 78 jump
+ 62 sit
+ 96 jump
+ 90 jump
+ 89 jump
+ 64 sit
+ 97 jump
+ 94 jump
+ 91 jump
+ 92 jump
+ 80 sit
+107 jump
+ 98 sit
+ 82 sit
+ 55 sit
+ 70 sit
+103 jump
+ 72 sit
+ 97 jump
+ 63 jump
+ 77 sit
+ 67 sit
+ 82 sit
+ 99 jump
+ 72 jump
+ 85 jump
+ 64 sit
+103 jump
+ 68 sit
+100 jump
+ 72 sit
+ 86 jump
+ 69 sit
+ 65 sit
+ 85 sit
+ 87 jump
+ 93 jump
+ 72 sit

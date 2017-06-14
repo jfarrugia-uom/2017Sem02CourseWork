@@ -1,0 +1,15 @@
+Add datastax repo to apt-get
+	echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+
+Add their key for verification
+	curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
+
+To update list of repos to use the datastax one:
+	sudo apt-get update 
+
+install cassandra
+	sudo apt-get install cassandra
+
+install python driver
+	sudo pip install cassandra-driver
+
