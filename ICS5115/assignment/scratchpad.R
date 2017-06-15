@@ -37,15 +37,34 @@ atp.elo.totals.test %>%
   count()
   
 
+kellyWager <- function(probability, odds) {
+  round(((probability * odds) -1 ) / (odds -1),2)
+}
+
 betting.set <-
-atp.elo.totals.valid %>%
+atp.elo.totals.test %>%
   filter(tourney_level %in% c('250 or 500', 'Davis Cup', 'Tour Finals', 'Grand Slams', 'Masters'),
          selection_elo_prediction >= 0.6, selection_elo_prediction - imputed_probability > 0) %>%
-  select(year, event_id, event_schedule_date, player, opponent, selection, weighted_odds, imputed_probability, selection_elo_prediction, is_win) %>%
+  select(year, event_id, tourney_level, event_schedule_date, 
+         player, opponent, selection, weighted_odds, imputed_probability, selection_elo_prediction, is_win) %>%
   arrange(event_schedule_date) %>%
   as.data.frame
 
-head(betting.set,15)
+
+nrow(atp.elo.totals.valid)
+nrow(betting.set)
+
+min(0.1, kellyWager(0.6, 2))
+
+
+
+
+
+
+    
+    
+summary(bet.test)
+
 length(unique(atp.elo.totals.valid$event_id))
 
 atp.elo.totals.test %>%
@@ -87,19 +106,19 @@ atp.matches.elo %>%
   filter(year==2014,  player=="Cilic"|opponent=="Baghdatis")
 
 atp.elo.totals %>% 
-  filter(event_id==101443185)
+  filter(event_id==21264649)
 
 atp_elo.2008 %>% 
-  filter(year(tourney_start_date)==2015, player_surname=="Fish", opponent_surname=="Lopez")
+  filter(year(tourney_start_date)==2008, player_surname=="Monfils", opponent_surname=="Petzschner")
 
 tennis.matches %>%
-  filter(event_id==115128311)
+  filter(event_id==125781455)
 
 duplicate.remove %>%
   filter(player=="Gasquet"|opponent=="Gasquet", year(event_schedule_date)==2015, event_schedule_date>='2015/6/29')
 
 tennis.tidy %>%
-  filter(event_id==125419057)
+  filter(event_id==125968070)
 
 tennis.pe.all.year %>%
   group_by(year) %>%
