@@ -1,9 +1,10 @@
 library(plyr)
 library(dplyr)
-library(fuzzyjoin)
 library(tidyr)
 library(tools)
 library(lubridate)
+library(ggplot2)
+library(scales)
 
 setwd("/home/jfarrugia/CourseWork/2017Sem02CourseWork/ICS5115/assignment")
 
@@ -272,18 +273,20 @@ duplicate.remove.2 <-
 atp.matches.elo <- atp.matches.elo[!atp.matches.elo$event_id %in% duplicate.remove.2$event_id,] 
 
 # join ELO prediction with Betfair data.  Now I have a model on which to base value bets
-atp.final.data <-
-  tennis.tidy %>%
-  inner_join(atp.matches.elo, by=c(year="year", event_id="event_id")) %>%
-  mutate(imputed_probability = 1/odds) %>%
-  select(year, event_id, tourney_name, tourney_level, round,
-         player=player.x, opponent=opponent.x,
-         scheduled_off, actual_off, selection, odds, imputed_probability, number_bets, volume_matched,
-         selection_win = is_win, player_win = win,
-         first_taken, latest_taken, player_rank, opponent_rank, player_age, opponent_age, prediction, opponent_prediction) %>%
-  as.data.frame
+# not necessary because am grouping the various odds in weighted odds
+# atp.final.data <-
+#   tennis.tidy %>%
+#   inner_join(atp.matches.elo, by=c(year="year", event_id="event_id")) %>%
+#   mutate(imputed_probability = 1/odds) %>%
+#   select(year, event_id, tourney_name, tourney_level, round,
+#          player=player.x, opponent=opponent.x,
+#          scheduled_off, actual_off, selection, odds, imputed_probability, number_bets, volume_matched,
+#          selection_win = is_win, player_win = win,
+#          first_taken, latest_taken, player_rank, opponent_rank, player_age, opponent_age, prediction, opponent_prediction) %>%
+#   as.data.frame
 
-# calculate weighted odds 
+# calculate weighted odds - the weighted odds will provide a reliavle odds average that take into consideration
+# the volume matched for both winning and losing selections.  
 weighted.odds <- 
   tennis.tidy %>%
   select(year, event_id, player, opponent, selection, is_win, odds, number_bets, volume_matched) %>%
@@ -310,6 +313,8 @@ totals <-
   select(year, event_id, player, opponent, selection, is_win, total_volume, total_bets, weighted_odds) %>%
   as.data.frame
 
+# now join the Betfair odds data - which has been aggregated such that each event is represented at most twice, each row representing
+# a selection made by the market - to the Elo calculations
 atp.elo.totals <-  
   totals %>% 
       inner_join(atp.matches.elo, by=c(year="year", event_id="event_id")) %>%
@@ -322,4 +327,9 @@ atp.elo.totals <-
              imputed_probability, selection_elo_prediction) %>%
       as.data.frame
 
+# some tournament names were stored in mixed case (ex. Us Open, US Open)
 atp.elo.totals$tourney_name <- toTitleCase(tolower(atp.elo.totals$tourney_name))
+
+# write to file - in case RStudio crashes (occasionally this happens in Linux too!) we can quickly resume our work
+# without having to spend time shaping the data frame until we can use it
+write.table(atp.elo.totals, file="atp_elo_totals.csv", sep = "|", row.names = FALSE)

@@ -99,17 +99,17 @@ sum(atp.elo.totals$total_volume  )
 mean(atp.elo.totals[atp.elo.totals$is_win==0,]$selection_elo_prediction)
 
 tennis.tidy %>%
-  filter(year==2016, player=="Silva", opponent=="Benjasupawan") %>%
+  filter(year==2017, player=="Dimitrov", opponent=="Istomin") %>%
   
 
 atp.matches.elo %>% 
   filter(year==2014,  player=="Cilic"|opponent=="Baghdatis")
 
 atp.elo.totals %>% 
-  filter(event_id==21264649)
+  filter(event_id==129732978)
 
 atp_elo.2008 %>% 
-  filter(year(tourney_start_date)==2008, player_surname=="Monfils", opponent_surname=="Petzschner")
+  filter(year(tourney_start_date)==2017, player_surname=="Dimitrov", opponent_surname=="Istomin")
 
 tennis.matches %>%
   filter(event_id==125781455)
@@ -118,7 +118,7 @@ duplicate.remove %>%
   filter(player=="Gasquet"|opponent=="Gasquet", year(event_schedule_date)==2015, event_schedule_date>='2015/6/29')
 
 tennis.tidy %>%
-  filter(event_id==125968070)
+  filter(event_id==129732978)
 
 tennis.pe.all.year %>%
   group_by(year) %>%
