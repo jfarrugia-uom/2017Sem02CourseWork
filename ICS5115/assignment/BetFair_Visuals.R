@@ -90,23 +90,37 @@ ggplot() +
   theme(plot.title = element_text(hjust = 0.5)) 
 
 # plot average bet size as it changes with weighted odds
+# avg.bet.size <- 
+#   atp.elo.totals %>%
+#   select(year, weighted_odds, total_volume, total_bets) %>%
+#   group_by(year, weighted_odds) %>%
+#   summarise(total_volume=sum(total_volume), total_bets=sum(total_bets)) %>%
+#   mutate(avg_bet=total_volume/total_bets) %>%
+#   filter(year%in%c(2015,2016)) %>%
+#   as.data.frame()
+
 avg.bet.size <- 
   atp.elo.totals %>%
-  select(year, weighted_odds, total_volume, total_bets) %>%
-  group_by(year, weighted_odds) %>%
+  select(year, tourney_level, weighted_odds, total_volume, total_bets) %>%
+  filter(year%in%c(2012,2013,2014,2015,2016)) %>%
+  group_by(tourney_level, weighted_odds) %>%
   summarise(total_volume=sum(total_volume), total_bets=sum(total_bets)) %>%
   mutate(avg_bet=total_volume/total_bets) %>%
-  filter(year%in%c(2015,2016)) %>%
-  as.data.frame()
+  as.data.frame
 
+# p1 <- ggplot(avg.bet.size %>%
+#                group_by(weighted_odds) %>%
+#                summarise(avg_bet=mean(avg_bet))
+#              , aes(x=1/weighted_odds, y=avg_bet))
 
 p1 <- ggplot(avg.bet.size %>%
-               group_by(weighted_odds) %>%
-               summarise(avg_bet=mean(avg_bet))
-             , aes(x=1/weighted_odds, y=avg_bet))
-p1 + geom_line(color="red") + labs(x="Imputed probability 1/weighted odds", y="Average bet size (€)") +
-  ggtitle("Relationship between event probability and bet size (2015-2016)") +
+               filter(tourney_level%in%c('250 or 500', 'Grand Slams', 'Challenger', 'Futures')) 
+               , aes(x=1/weighted_odds, y=avg_bet, colour=tourney_level))
+
+p1 + geom_line(alpha=0.6) + labs(x="Imputed probability 1/weighted odds", y="Average bet size (€)") +
+  ggtitle("Relationship between event probability, tourney level and bet size (2012-2016)") +
   theme(plot.title = element_text(hjust = 0.5)) 
+
 
 # plot heat map of draws attracting most matched bets
 

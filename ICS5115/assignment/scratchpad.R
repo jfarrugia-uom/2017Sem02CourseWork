@@ -106,7 +106,7 @@ atp.matches.elo %>%
   filter(year==2014,  player=="Cilic"|opponent=="Baghdatis")
 
 atp.elo.totals %>% 
-  filter(event_id==129732978)
+  filter(event_id==129129001)
 
 atp_elo.2008 %>% 
   filter(year(tourney_start_date)==2017, player_surname=="Dimitrov", opponent_surname=="Istomin")
@@ -118,7 +118,7 @@ duplicate.remove %>%
   filter(player=="Gasquet"|opponent=="Gasquet", year(event_schedule_date)==2015, event_schedule_date>='2015/6/29')
 
 tennis.tidy %>%
-  filter(event_id==129732978)
+  filter(event_id==129129001)
 
 tennis.pe.all.year %>%
   group_by(year) %>%

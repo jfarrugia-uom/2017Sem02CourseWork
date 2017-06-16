@@ -78,8 +78,8 @@ all.zip.files <- list.files(".", pattern="*.zip")
 for (i in all.zip.files[1:10]) {
   cat("Doing", i, "\n")
   archive.list <- unzip(i, list=TRUE)
-  #sapply(archive.list$Name, unzip.and.extract, i)
-  sapply(archive.list$Name, check.if.exists)
+  sapply(archive.list$Name, unzip.and.extract, i)
+  #sapply(archive.list$Name, check.if.exists)
 }
 
 
