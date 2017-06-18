@@ -103,22 +103,26 @@ tennis.tidy %>%
   
 
 atp.matches.elo %>% 
-  filter(year==2014,  player=="Cilic"|opponent=="Baghdatis")
+  filter(year==2013,  player_surname=="Ferrer", opponent_surname=="Wawrinka")
 
 atp.elo.totals %>% 
-  filter(event_id==129129001)
+  filter(event_id==129129001)s
 
 atp_elo.2008 %>% 
-  filter(year(tourney_start_date)==2017, player_surname=="Dimitrov", opponent_surname=="Istomin")
+  filter(year(tourney_start_date)==2014, player_surname=="Ferrer", opponent_surname=="Wawrinka")
 
 tennis.matches %>%
-  filter(event_id==125781455)
+  filter(event_id==112262226)
 
 duplicate.remove %>%
   filter(player=="Gasquet"|opponent=="Gasquet", year(event_schedule_date)==2015, event_schedule_date>='2015/6/29')
 
 tennis.tidy %>%
-  filter(event_id==129129001)
+  filter(event_id==112262226)
+
+atp.elo.totals %>%
+  filter(tourney_level=="Futures") %>%
+  sample_n(20)
 
 tennis.pe.all.year %>%
   group_by(year) %>%
@@ -153,3 +157,7 @@ summary(slam.2015.total_volume)
 summary(elo.variance)
 
 
+
+atp.matches.elo %>%
+  filter(days_elapsed > 30)
+dbinom(2, 6, 0.7)

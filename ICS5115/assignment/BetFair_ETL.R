@@ -160,14 +160,11 @@ extract.player <- function(description, index) {
   trimws(gsub("[0-9.]", "", unlist(strsplit(player.pair, " v "))[index]) )
 }
 
-# since we're joing with ELO tennis match history, we don't need these details
 tennis.pe.all.year$tourney <- sapply(tennis.pe.all.year$FULL_DESCRIPTION, extract.tournament, USE.NAMES = FALSE)
 tennis.pe.all.year$round <- sapply(tennis.pe.all.year$FULL_DESCRIPTION, extract.round, USE.NAMES = FALSE)
 tennis.pe.all.year$player <- sapply(tennis.pe.all.year$FULL_DESCRIPTION, extract.player, 1, USE.NAMES =  FALSE)
 tennis.pe.all.year$opponent <- sapply(tennis.pe.all.year$FULL_DESCRIPTION, extract.player, 2, USE.NAMES =  FALSE)
 
-# player and opponent will be pulled by pivoting SELECTION on event and year
-# tourney, round, governing.body will be extracted from ELO history
 
 summary(tennis.pe.all.year)
 # convert selection to Title Case
@@ -230,6 +227,10 @@ tennis.matches <-
   distinct(year, event_id, player, opponent) %>%
   as.data.frame
 
+# number of tennis matches in "tidy" data set
+nrow(tennis.matches)
+nrow(tennis.tidy)
+
 # embellish with event schedule date
 tennis.matches <-
   tennis.matches %>%
@@ -247,7 +248,7 @@ atp.matches.elo <-
   group_by(year, event_id) %>%
   mutate(min_days_elapsed = min(days_elapsed), opponent_prediction = 1- prediction) %>%
   filter(days_elapsed == min_days_elapsed, days_elapsed < 100) %>%
-  select(year, event_id, player, opponent, event_schedule_date, player_rank, opponent_rank, 
+  select(year, event_id, player, opponent, event_schedule_date, days_elapsed, player_rank, opponent_rank, 
          player_age, opponent_age, tourney_name, tourney_level, round, win, prediction, opponent_prediction
   ) %>%
   as.data.frame 
@@ -333,3 +334,4 @@ atp.elo.totals$tourney_name <- toTitleCase(tolower(atp.elo.totals$tourney_name))
 # write to file - in case RStudio crashes (occasionally this happens in Linux too!) we can quickly resume our work
 # without having to spend time shaping the data frame until we can use it
 write.table(atp.elo.totals, file="atp_elo_totals.csv", sep = "|", row.names = FALSE)
+

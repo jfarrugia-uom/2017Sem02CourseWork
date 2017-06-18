@@ -4,8 +4,9 @@ library(ggplot2)
 #density plot of weighted odds.  Median odds of 1.48 (68% imputed probability) for win
 density.test <- atp.elo.totals[atp.elo.totals$is_win==1, ]
 density.test$year <- as.factor(as.numeric(density.test$year))
-ggplot(density.test[density.test$year%in%c('2010','2011','2012','2013','2014','2015','2016'),], aes(x=weighted_odds)) + geom_density(aes(group=year, colour=year))+
-  scale_x_continuous(trans='log2') + labs(title="Density plot of winning weighted odds by year", x="Weighted Odds (Log base 2)", y="Density")+
+ggplot(density.test[density.test$year%in%c('2010','2011','2012','2013','2014','2015','2016'),], aes(x=1/weighted_odds)) + geom_density(aes(group=year, colour=year))+
+#  scale_x_continuous(trans='log2') + 
+  labs(title="Density plot of winning weighted odds by year", x="1/Weighted Odds (Imputed Probability)", y="Density")+
   theme(plot.title = element_text(hjust = 0.5))
 
 median(density.test$weighted_odds)
@@ -15,9 +16,14 @@ mean(density.test$weighted_odds)
 outlier.test <- 
   atp.elo.totals %>%
   filter(is_win==1) %>%
-  mutate(weighted_odds_log = log2(weighted.odds)) %>%
-  sample_n(1000) %>%
+  mutate(weighted_odds_log = log2(weighted_odds)) %>%
+  sample_n(2000) %>%
   as.data.frame
+
+
+# example upset from Grand Slam tournament in sample
+outlier.test %>% 
+  filter(tourney_level=="Grand Slams", weighted_odds >= 16)
 
 op <- par(mar=c(7,4,4,2))
 boxplot(outlier.test$weighted_odds_log ~ as.factor(outlier.test$tourney_level),
@@ -183,20 +189,27 @@ qplot(selection_elo_prediction, data=atp.elo.totals.test,
       geom="density", fill=as.factor(is_win), alpha=I(0.5), 
       facets = (~as.factor(tourney_level)),
       xlab="Elo Probability", ylab="Density", main="Frequency Distribution of Elo Probabilites per Tourney Level ") + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+# plot of weighted odds distributions
+qplot(imputed_probability, data=atp.elo.totals.test,
+      geom="density", fill=as.factor(is_win), alpha=I(0.5), 
+      facets = (~as.factor(tourney_level)),
+      xlab="Elo Probability", ylab="Density", main="Frequency Distribution of Elo Probabilites per Tourney Level ") + 
   theme(plot.title = element_text(hjust = 0.5)) 
 
 # Explore impact of Elo variance from imputed probablity derived from weighted odd
 elo.variance <-
   atp.elo.totals.test %>%
   filter(tourney_level %in% c('250 or 500', 'Davis Cup', 'Tour Finals', 'Grand Slams', 'Masters'),
-         (selection_elo_prediction - imputed_probability) > 0,
-         selection_elo_prediction >= 0.6
+         #(selection_elo_prediction - imputed_probability) > 0,
+         selection_elo_prediction >= 0.63
   ) %>%
-  mutate(elo_variance = round(abs(selection_elo_prediction - imputed_probability), 2)) %>%
-  select(year, event_id, is_win, selection_elo_prediction, elo_variance) %>%
+  mutate(elo_variance = round(selection_elo_prediction - imputed_probability, 2)) %>%
+  select(year, event_id, is_win, selection_elo_prediction, imputed_probability, elo_variance) %>%
   as.data.frame
 
-elo.variance$variance_range <- cut(elo.variance$elo_variance, seq(0, 1, 0.1), right=FALSE)
+elo.variance$variance_range <- cut(elo.variance$elo_variance, seq(-1, 1, 0.1), right=FALSE)
 elo.variance$is_win <- as.factor(elo.variance$is_win)
 # outcome of wins and losses from dataset - roughly 53% of selections were winning ones
 atp.elo.totals.test %>%
