@@ -90,6 +90,13 @@ calc_roi <- function(df, col_name) {
   roi.df
 }
 
+estimated.t.test <- function(n, roi, mean_odds) {
+  t <- (sqrt(n) * (roi - 1)) / sqrt(roi * (mean_odds - roi))
+  print(t)
+  pt(t, n-1, lower.tail=FALSE)
+}
+
+
 # this function first generates a random sample from my validation data, calculates the wager size and then 
 # simulates the actual bets.  The result is returned as a data frame.  "ldply" is then responsible to collate the various
 # attempt runs in one large data frame.  The latter can then be used to plot, measure averages etc.
@@ -134,7 +141,7 @@ place_bets_strategy <- function(attempt, bet_set, sample_size, limit_exposure) {
 
 
 # set number of samples
-n_sample <- 500
+n_sample <- 500 #set to 1022 to run on entire set
 
 # run 10 attempts - bet a maximum of 10%.  Less if the edge is not sufficiently wide
 df <- ldply(1:20, place_bets, betting.set, n_sample, kelly_wager, 0.1)
@@ -148,10 +155,16 @@ df %>%
   summarise(avg_bank = mean(bank))
 
 # calculate mean roi over all attempts
+bet.stats <- 
 df %>% 
   group_by(attempt) %>%
   summarise(roi = (sum(won) - sum(wager)) / sum(wager), mean_odds = mean(odds)) %>%
-  summarise(mean(roi), mean(mean_odds))
+  summarise(mean_roi=mean(roi), mean_odds=mean(mean_odds)) %>%
+  as.data.frame
+  
+# statistical signifance based on t-test
+estimated.t.test(n_sample, 1+bet.stats$mean_roi, bet.stats$mean_odds)
+estimated.t.test(500, 1.05, 1.436)
 
 # plot each attempt in its own facet
 qplot(x=bet_count, y=bank, data=df, geom="line",facets=(~attempt), xlab="Bet #", ylab = "Bank (€)", main="Bank Roll Projection" )

@@ -106,7 +106,7 @@ atp.matches.elo %>%
   filter(year==2013,  player_surname=="Ferrer", opponent_surname=="Wawrinka")
 
 atp.elo.totals %>% 
-  filter(event_id==129129001)s
+  filter(event_id==100452258)
 
 atp_elo.2008 %>% 
   filter(year(tourney_start_date)==2014, player_surname=="Ferrer", opponent_surname=="Wawrinka")
@@ -157,7 +157,23 @@ summary(slam.2015.total_volume)
 summary(elo.variance)
 
 
+summary(atp.matches.elo$days_elapsed)
+
+sd(atp.matches.elo$days_elapsed)
 
 atp.matches.elo %>%
   filter(days_elapsed > 30)
-dbinom(2, 6, 0.7)
+
+
+
+atp.elo.totals %>% 
+  filter(is_win == 1) %>% 
+  summarise(mean(imputed_probability))
+
+1-pbinom(13, 20, 0.5)
+
+pt(1.76, 499, lower.tail=FALSE)
+
+qt(0.95, 499)
+
+ifelse(runif(2000, 0, 1) > 0.5, 'H', 'T')

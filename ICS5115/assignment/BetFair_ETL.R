@@ -6,6 +6,8 @@ library(lubridate)
 library(ggplot2)
 library(scales)
 
+# set working directory; pls make sure that all R code files, and Elo RData files are directly in the 
+# working directory. Betfair (tennis) files must be stored in a directory stage created in the working directory
 setwd("/home/jfarrugia/CourseWork/2017Sem02CourseWork/ICS5115/assignment")
 
 clean.lines <- function(x) {
@@ -334,4 +336,3 @@ atp.elo.totals$tourney_name <- toTitleCase(tolower(atp.elo.totals$tourney_name))
 # write to file - in case RStudio crashes (occasionally this happens in Linux too!) we can quickly resume our work
 # without having to spend time shaping the data frame until we can use it
 write.table(atp.elo.totals, file="atp_elo_totals.csv", sep = "|", row.names = FALSE)
-

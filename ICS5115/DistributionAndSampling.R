@@ -58,3 +58,5 @@ hist(drawmeans.2, breaks = seq(50, 80, by = 1), main = "1000 averages of 10 weig
 df2 <- data.frame(attempt=1:1000, observed_average = drawmeans.2)
 p5 <- ggplot(df2, aes(x = attempt, y = observed_average))
 p5 + geom_line() + expand_limits(y=c(55, 75))
+
+
