@@ -2,6 +2,9 @@
 
 import sys
 import re
+from collections import Counter
+from itertools import combinations
+from itertools import permutations
 
 def checkForCharacter(line):
 	returnStr = ""
@@ -14,8 +17,7 @@ def checkForCharacter(line):
 
 def checkForSceneChange(line):
 	sceneChange = False	
-	if (re.match(r'(EXT[\.]* +)|(INT[\.]* +)', line)):
-		#print line
+	if (re.match(r'(EXT[\.]* +)|(INT[\.]* +)', line)):		
 		sceneChange = True
 	return sceneChange
 	
@@ -41,6 +43,9 @@ def main():
 	episode = 0
 	scenes = []
 	charsInScene = []
+	DIALOGUE_DISTANCE = 2
+	characterPair = {}
+	
 	for line in sys.stdin:
 		line = line.strip()	
 		
@@ -72,13 +77,22 @@ def main():
 		if (scriptLine):
 			#print scriptLine
 			lines += 1
+	# print last last count after end of loop
 	print "Line count: %d" %lines
-	
+	# append last scene to list of scenes
+	if (len(charsInScene) > 1):
+		scenes.append(charsInScene)
 	
 	print("===========================> OK, we're breaking it up now")
+	print len(scenes)
+
 	for scene in scenes:
-		print scene
-	
+		print scene	
+		aggLines = Counter(scene)			
+		print aggLines
+		for pair in combinations(sorted(aggLines.iteritems()),2):
+			print "%s\t%s\t%d" %(pair[0][0], pair[1][0], pair[0][1] * pair[1][1])
+				
 			
 if (__name__== "__main__"):
 	main()	
